@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Recipe from "./components/Recipe"
+import './App.css' 
 
 const App= ()=>{
   const APP_ID= 'dc34792b'
@@ -14,7 +15,7 @@ const App= ()=>{
       const res= await fetch(`https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`);
       const response = await res.json()
       setDishes(response.hits)
-      console.log(response)
+      // console.log(response)
     }
     getData()
   },[query])
@@ -25,15 +26,17 @@ const App= ()=>{
     setSearch('')
   }
 
-  return <>
-  <form onSubmit={submitHandler}>
-    <input type="text"  value={search} onChange={e=> setSearch(e.target.value) }/>
-    <button type="submit">Submit</button>
+  return <div className="App">
+  <form className="search-form" onSubmit={submitHandler}>
+    <input type="text"  value={search} className="search-bar" onChange={e=> setSearch(e.target.value) }/>
+    <button type="submit" className="search-button" >Submit</button>
   </form>
-  {
-    dishes.map((item,idx)=> <Recipe  recipeList={item} key={idx}/>)
-  }
-  </>
+  <div className="recipes">
+    {
+      dishes.map((item,idx)=> <Recipe  recipeList={item} key={idx}/>)
+    }
+  </div>
+  </div>
 }
 
 export default App
